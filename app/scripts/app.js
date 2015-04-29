@@ -34,7 +34,15 @@ angular
       })
       .when('/addUtil',{
         templateUrl:'views/ajout.html',
-        controller: 'AddCtrl'
+        controller: 'AddUtilCtrl'
+      })
+      .when('/:userId/delete',{
+        templateUrl:'views/delete.html',
+        controller:'DeleteUtilCtrl'
+      })
+      .when('/:userId/details',{
+        templeteUrl:'views/delete.html',
+        controller:'DetailUtilCtrl'
       })
       .otherwise({
         redirectTo: '/'

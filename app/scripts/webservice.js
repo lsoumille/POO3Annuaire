@@ -32,4 +32,16 @@ angular.module('gestionUsersApp')
           }
         });
     }
+
+    //delete one user
+    this.delete = function(userId, successCB, errorCB) {
+      $http.delete('http://poo-ihm-2015-rest.herokuapp.com/api/Users/'+ userId)
+        .success(function(data) {
+          if (data.status === 'success') {
+            successCB(data.data);
+          } else {
+            errorCB(data.data);
+          }
+        });
+    };
   }])
