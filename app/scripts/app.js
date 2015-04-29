@@ -22,7 +22,7 @@ angular
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/main.html',
+        templateUrl: 'views/main.html'
       })
       .when('/utilisateurs', {
         templateUrl: 'views/utilisateurs.html',
@@ -30,7 +30,11 @@ angular
       })
       .when('/projets',{
         templateUrl:'views/projets.html',
-        controller : 'UsersCtrl'
+        controller: 'UsersCtrl'
+      })
+      .when('/addUtil',{
+        templateUrl:'views/ajout.html',
+        controller: 'AddCtrl'
       })
       .otherwise({
         redirectTo: '/'

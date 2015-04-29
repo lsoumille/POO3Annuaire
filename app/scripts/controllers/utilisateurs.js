@@ -2,24 +2,51 @@
 
 /**
  * @ngdoc function
- * @name gestionUsersApp.controller:MainCtrl
+ * @name gestionUsersApp.controller:UtilCtrl
  * @description
- * # MainCtrl
+ * # UtilCtrl
  * Controller of the gestionUsersApp
  */
 angular.module('gestionUsersApp')
-  .controller('UtilCtrl',  ['$scope', '$http', '$routeParams', function ($scope, $http, $routeParams) {
+  .controller('UtilCtrl',  ['$scope', '$http', '$routeParams', 'Users', function ($scope, $http, $routeParams, Users) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
       'Karma'
     ];
 
+    Users.getAll($routeParams.userId, function (data) {
+      $scope.users = data;
+    }, function (data) {
+      //erreur dans le chargement
+    });
+  }])
+
+  .controller('AddCtrl',['$scope', '$http', '$routeParams', 'Users', function ($scope, $http, $routeParams, Users){
+    $scope.awesomeThings = [
+      'HTML5 Boilerplate',
+      'AngularJS',
+      'Karma'
+    ];
+
+    $scope.addUser = function () {
+      Users.add($scope.user, function (data){
+        //afficher l'élément ajouté
+      }, function (data){
+        //erreur dans l'ajout
+      });
+    };
+  }])
+
+
+
+    /*
     $http.get('http://poo-ihm-2015-rest.herokuapp.com/api/Users')
       .success(function(data) {
         $scope.users = data.data;
         console.log($scope.users);
       });
+     */
     /*
      if($routeParams.userId) {
      $http.get('http://poo-ihm-2015-rest.herokuapp.com/api/Users/' + $routeParams.userId)
@@ -29,4 +56,4 @@ angular.module('gestionUsersApp')
      }
      });
      }*/
-  }]);
+
