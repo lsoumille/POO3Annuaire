@@ -57,6 +57,18 @@ angular.module('gestionUsersApp')
         });
     }
 
+    //edit the user with userId
+    this.edit = function(user, successCB, errorCB) {
+      $http.put('http://poo-ihm-2015-rest.herokuapp.com/api/Users/'+ user.id, user)
+        .success(function(data) {
+          if (data.status === 'success') {
+            successCB(data.data);
+          } else {
+            errorCB(data.data);
+          }
+        });
+    }
+
   }])
 
   .service('Roles',  ['$http', function Roles($http) {

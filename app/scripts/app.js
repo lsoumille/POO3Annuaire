@@ -44,6 +44,10 @@ angular
         templateUrl:'views/details.html',
         controller:'DetailUtilCtrl'
       })
+      .when('/:userId/editer', {
+        templateUrl:'views/ajout.html',
+        controller:'EditUtilCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

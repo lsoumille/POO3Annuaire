@@ -50,7 +50,6 @@ angular.module('gestionUsersApp')
       Users.delete($routeParams.userId,
         function(data) {
           $location.url('/utilisateurs');
-          $scope.$apply();
         },
         function(data) {
           //$scope.msg = "Failed";
@@ -92,5 +91,33 @@ angular.module('gestionUsersApp')
           $scope.error = data;
         });
     }
+  }])
+
+  .controller('EditUtilCtrl', ['$scope', '$http', '$routeParams', '$location', 'Users', function ($scope, $http, $routeParams, $location, Users) {
+    $scope.awesomeThings = [
+      'HTML5 Boilerplate',
+      'AngularJS',
+      'Karma'
+    ];
+
+    if ($routeParams.userId) {
+      Users.get($routeParams.userId,
+        function(data) {
+          $scope.user = data;
+        },
+        function(data) {
+          $scope.error = data;
+        });
+    }
+
+    $scope.addUser = function() {
+      Users.edit($scope.user,
+        function(data) {
+          $location.path('/'+ data.id +'/details');
+        },
+        function(data) {
+          $scope.error = data;
+        });
+    };
   }])
 
