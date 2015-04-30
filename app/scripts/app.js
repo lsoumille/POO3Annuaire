@@ -41,7 +41,7 @@ angular
         controller:'DeleteUtilCtrl'
       })
       .when('/:userId/details',{
-        templeteUrl:'views/delete.html',
+        templateUrl:'views/details.html',
         controller:'DetailUtilCtrl'
       })
       .otherwise({

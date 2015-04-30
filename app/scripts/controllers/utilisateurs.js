@@ -58,31 +58,39 @@ angular.module('gestionUsersApp')
     }
   }])
 
-  .controller('DetailUtilCtrl',['$scope', '$http', '$routeParams', 'Users', function ($scope, $http, $routeParams, Users) {
+
+  .controller('DetailUtilCtrl',['$scope', '$http', '$routeParams', 'Users', 'Roles', 'Projects', function ($scope, $http, $routeParams, Users, Roles, Projects) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
       'Karma'
     ];
+    if ($routeParams.userId) {
+      Users.get($routeParams.userId,
+        function (data) {
+          $scope.user = data;
+        },
+        function (data) {
+          $scope.error = data;
+        });
+
+      Roles.get($routeParams.userId,
+      function (data){
+        var donnees = data;
+        $scope.projects = new Array();
+        var i = 0;
+        for( ; i < donnees.length ; ++i ){
+          var ind = i;
+          Projects.get(donnees[i].ProjectId, function (data){
+            data.name = donnees[ind].name;
+            $scope.projects.push(data);
+          }, function (data) {
+            //error
+          });
+        }
+      },function (data) {
+          $scope.error = data;
+        });
+    }
   }])
-
-
-
-
-/*
-$http.get('http://poo-ihm-2015-rest.herokuapp.com/api/Users')
-  .success(function(data) {
-    $scope.users = data.data;
-    console.log($scope.users);
-  });
- */
-    /*
-     if($routeParams.userId) {
-     $http.get('http://poo-ihm-2015-rest.herokuapp.com/api/Users/' + $routeParams.userId)
-     .success(function(data) {
-     if (data.statuconsole.log($scope.nom);s == "success") {
-     $scope.currentUser = data.data;
-     }
-     });
-     }*/
 
