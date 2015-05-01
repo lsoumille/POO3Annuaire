@@ -2,9 +2,9 @@
 
 /**
  * @ngdoc function
- * @name gestionUsersApp.controller:UtilCtrl
+ * @name gestionUsersApp.controller
  * @description
- * # UtilCtrl
+ *
  * Controller of the gestionUsersApp
  */
 angular.module('gestionUsersApp')

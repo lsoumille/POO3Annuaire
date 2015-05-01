@@ -86,10 +86,33 @@ angular.module('gestionUsersApp')
   }])
 
   .service('Projects',  ['$http', function Projects($http) {
-    //select all users
+    //select project with the projetId
     this.get = function (projetId, successCB, errorCB) {
       $http.get('http://poo-ihm-2015-rest.herokuapp.com/api/Projects/' + projetId)
         .success(function (data) {
+          if (data.status === 'success') {
+            successCB(data.data);
+          } else {
+            errorCB(data.data);
+          }
+        });
+    }
+    //select all projects
+    this.getAll = function (projectId, successCB, errorCB) {
+      $http.get('http://poo-ihm-2015-rest.herokuapp.com/api/Projects/')
+        .success(function (data) {
+          if (data.status === 'success') {
+            successCB(data.data);
+          } else {
+            errorCB(data.data);
+          }
+        });
+    };
+
+    //add one project
+    this.add = function(project, successCB, errorCB) {
+      $http.post('http://poo-ihm-2015-rest.herokuapp.com/api/Projects', project)
+        .success(function(data) {
           if (data.status === 'success') {
             successCB(data.data);
           } else {

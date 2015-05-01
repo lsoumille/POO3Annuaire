@@ -25,27 +25,31 @@ angular
         templateUrl: 'views/main.html'
       })
       .when('/utilisateurs', {
-        templateUrl: 'views/utilisateurs.html',
+        templateUrl: '../views/utilisateurs/utilisateurs.html',
         controller: 'UtilCtrl'
       })
       .when('/projets',{
-        templateUrl:'views/projets.html',
-        controller: 'UsersCtrl'
+        templateUrl:'../views/projets/projets.html',
+        controller: 'ProjCtrl'
       })
       .when('/addUtil',{
-        templateUrl:'views/ajout.html',
+        templateUrl:'../views/utilisateurs/addUtil.html',
         controller: 'AddUtilCtrl'
       })
-      .when('/:userId/delete',{
+      .when('/addProj',{
+        templateUrl:'../views/projets/addProj.html',
+        controller: 'AddProjCtrl'
+      })
+      .when('/:userId/deleteUtil',{
         templateUrl:'views/delete.html',
         controller:'DeleteUtilCtrl'
       })
-      .when('/:userId/details',{
-        templateUrl:'views/details.html',
+      .when('/:userId/detailsUtil',{
+        templateUrl:'../views/utilisateurs/detailsUtil.html',
         controller:'DetailUtilCtrl'
       })
-      .when('/:userId/editer', {
-        templateUrl:'views/ajout.html',
+      .when('/:userId/editerUtil', {
+        templateUrl:'../views/utilisateurs/addUtil.html',
         controller:'EditUtilCtrl'
       })
       .otherwise({
