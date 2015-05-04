@@ -111,7 +111,7 @@ angular.module('gestionUsersApp')
 
     //add one project
     this.add = function(project, successCB, errorCB) {
-      $http.post('http://poo-ihm-2015-rest.herokuapp.com/api/Projects', project)
+      $http.post('http://poo-ihm-2015-rest.herokuapp.com/api/Projects/', project)
         .success(function(data) {
           if (data.status === 'success') {
             successCB(data.data);
@@ -121,5 +121,28 @@ angular.module('gestionUsersApp')
         });
     }
 
+    //delete one project
+    this.delete = function(projId, successCB, errorCB) {
+      $http.delete('http://poo-ihm-2015-rest.herokuapp.com/api/Projects/'+ projId)
+        .success(function(data) {
+          if (data.status === 'success') {
+            successCB(data.data);
+          } else {
+            errorCB(data.data);
+          }
+        });
+    }
+
+    //edit the user with userId
+    this.edit = function(proj, successCB, errorCB) {
+      $http.put('http://poo-ihm-2015-rest.herokuapp.com/api/Projects/'+ proj.id, proj)
+        .success(function(data) {
+          if (data.status === 'success') {
+            successCB(data.data);
+          } else {
+            errorCB(data.data);
+          }
+        });
+    }
 
   }])

@@ -13,8 +13,8 @@
       <tr ng-repeat="proj in projects | filter:proj">
         <td><a href="#/{{proj.id}}/details"> {{ proj.title }} </a></td>
         <td> {{ proj.description}} </td>
-        <td><a href="#/{{proj.id}}/editer"><i class="fa fa-pencil-square-o fa-2x"></i></a></td>
-        <td><a href="#/{{proj.id}}/delete"><i class="fa fa-times fa-2x"></i></a></td>
+        <td><a href="#/{{proj.id}}/editerProj"><i class="fa fa-pencil-square-o fa-2x"></i></a></td>
+        <td><a ng-click="deleteElt(proj.id)"><i class="fa fa-times fa-2x"></i></a></td>
       </tr>
     </table>
   </div>

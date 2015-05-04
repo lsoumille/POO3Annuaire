@@ -52,6 +52,10 @@ angular
         templateUrl:'../views/utilisateurs/addUtil.html',
         controller:'EditUtilCtrl'
       })
+      .when('/:projId/editerProj', {
+        templateUrl:'../views/projets/addProj.html',
+        controller:'EditProjCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

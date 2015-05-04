@@ -113,7 +113,7 @@ angular.module('gestionUsersApp')
     $scope.addUser = function() {
       Users.edit($scope.user,
         function(data) {
-          $location.path('/'+ data.id +'/details');
+          $location.path('/'+ data.id +'/detailsUtil');
         },
         function(data) {
           $scope.error = data;
