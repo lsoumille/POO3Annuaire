@@ -23,7 +23,7 @@ angular.module('gestionUsersApp')
 
     //add one user
     this.add = function(user, successCB, errorCB) {
-      $http.post('http://poo-ihm-2015-rest.herokuapp.com/api/Users', user)
+      $http.post('http://poo-ihm-2015-rest.herokuapp.com/api/Users/', user)
         .success(function(data) {
           if (data.status === 'success') {
             successCB(data.data);
@@ -72,8 +72,8 @@ angular.module('gestionUsersApp')
   }])
 
   .service('Roles',  ['$http', function Roles($http) {
-    //select all users
-    this.get = function (userId, successCB, errorCB) {
+    //select all roles for the user
+    this.getByUser = function (userId, successCB, errorCB) {
       $http.get('http://poo-ihm-2015-rest.herokuapp.com/api/Users/' + userId + '/Roles')
         .success(function (data) {
           if (data.status === 'success') {
@@ -83,6 +83,19 @@ angular.module('gestionUsersApp')
           }
         });
     }
+
+    //select all user for the project
+    this.getByProject = function (projId, successCB, errorCB) {
+      $http.get('http://poo-ihm-2015-rest.herokuapp.com/api/Projects/' + projId + '/Roles')
+        .success(function (data) {
+          if (data.status === 'success') {
+            successCB(data.data);
+          } else {
+            errorCB(data.data);
+          }
+        });
+    }
+
   }])
 
   .service('Projects',  ['$http', function Projects($http) {
@@ -97,6 +110,31 @@ angular.module('gestionUsersApp')
           }
         });
     }
+
+    //get utilisateurs of the project
+    this.getUtil = function (projetId, successCB, errorCB) {
+      $http.get('http://poo-ihm-2015-rest.herokuapp.com/api/Projects/' + projetId + '/Users/')
+        .success(function (data) {
+          if (data.status === 'success') {
+            successCB(data.data);
+          } else {
+            errorCB(data.data);
+          }
+        });
+    }
+
+    //get roles of the project
+    this.getRoles = function (projetId, successCB, errorCB) {
+      $http.get('http://poo-ihm-2015-rest.herokuapp.com/api/Projects/' + projetId + '/Roles/')
+        .success(function (data) {
+          if (data.status === 'success') {
+            successCB(data.data);
+          } else {
+            errorCB(data.data);
+          }
+        });
+    }
+
     //select all projects
     this.getAll = function (projectId, successCB, errorCB) {
       $http.get('http://poo-ihm-2015-rest.herokuapp.com/api/Projects/')

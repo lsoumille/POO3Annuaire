@@ -27,7 +27,6 @@ angular.module('gestionUsersApp')
       }, function (data){
         //erreur dans le delete
       });
-      //console.log(data);
     }
 
   }])
@@ -72,3 +71,54 @@ angular.module('gestionUsersApp')
       });
     }
   }])
+
+  .controller('DetailProjCtrl',['$scope', '$http', '$routeParams', 'Users', 'Roles', 'Projects', function ($scope, $http, $routeParams, Users, Roles, Projects) {
+    $scope.awesomeThings = [
+      'HTML5 Boilerplate',
+      'AngularJS',
+      'Karma'
+    ];
+
+    if ($routeParams.projId) {
+      $scope.users = new Array();
+      Projects.get($routeParams.projId,
+        function (data) {
+          $scope.proj = data;
+          var donneesUtil = new Array();
+          Projects.getUtil($routeParams.projId,
+            function (data) {
+              donneesUtil = data;
+
+              var donneesRoles = new Array();
+              Projects.getRoles($routeParams.projId,
+                function (data) {
+                  donneesRoles = data;
+                  for(var i = 0 ; i < donneesRoles.length ; ++i){
+                    for(var j = 0 ; j < donneesUtil.length ; ++j){
+                      if(donneesRoles[i].UserId === donneesUtil[j].id){
+                        donneesRoles[i].surname = donneesUtil[j].surname;
+                        donneesRoles[i].prenom = donneesUtil[j].name;
+
+                        break;
+                      }
+                    }
+                  }
+                  console.log(donneesRoles[0]);
+                  $scope.users = donneesRoles;
+
+                }, function (data) {
+                  //a faire
+                });
+            },
+            function (data) {
+              //a faire
+            });
+
+        },
+        function (data) {
+          $scope.error = data;// a refaire
+        });
+
+    }
+  }])
+

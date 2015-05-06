@@ -73,7 +73,7 @@ angular.module('gestionUsersApp')
           $scope.error = data;
         });
 
-      Roles.get($routeParams.userId,
+      Roles.getByUser($routeParams.userId,
       function (data){
         var donnees = data;
         $scope.projects = new Array();
