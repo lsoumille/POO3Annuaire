@@ -13,7 +13,7 @@
         <tr ng-repeat="user in users | filter:user">
           <td><a href="#/{{user.id}}/detailsUtil"> {{ user.name }} {{ user.surname }}</a></td>
           <td><a href="#/{{user.id}}/editerUtil"><i class="fa fa-pencil-square-o fa-2x"></i></a></td>
-          <td><a href="#/{{user.id}}/deleteUtil"><i class="fa fa-times fa-2x"></i></a></td>
+          <td><a ng-click="deleteElt(user.id)"><i class="fa fa-times fa-2x"></i></a></td>
         </tr>
       </table>
   </div>

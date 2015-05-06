@@ -69,6 +69,27 @@ angular.module('gestionUsersApp')
         });
     }
 
+    this.getProj = function(userId, successCB, errorCB) {
+      $http.get('http://poo-ihm-2015-rest.herokuapp.com/api/Users/'+ userId + '/Projects/')
+        .success(function(data) {
+          if (data.status === 'success') {
+            successCB(data.data);
+          } else {
+            errorCB(data.data);
+          }
+        });
+    }
+
+    this.getRoles = function(userId, successCB, errorCB) {
+      $http.get('http://poo-ihm-2015-rest.herokuapp.com/api/Users/'+ userId + '/Roles/')
+        .success(function(data) {
+          if (data.status === 'success') {
+            successCB(data.data);
+          } else {
+            errorCB(data.data);
+          }
+        });
+    }
   }])
 
   .service('Roles',  ['$http', function Roles($http) {

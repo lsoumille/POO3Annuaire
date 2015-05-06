@@ -88,7 +88,6 @@ angular.module('gestionUsersApp')
           Projects.getUtil($routeParams.projId,
             function (data) {
               donneesUtil = data;
-
               var donneesRoles = new Array();
               Projects.getRoles($routeParams.projId,
                 function (data) {
@@ -98,12 +97,10 @@ angular.module('gestionUsersApp')
                       if(donneesRoles[i].UserId === donneesUtil[j].id){
                         donneesRoles[i].surname = donneesUtil[j].surname;
                         donneesRoles[i].prenom = donneesUtil[j].name;
-
                         break;
                       }
                     }
                   }
-                  console.log(donneesRoles[0]);
                   $scope.users = donneesRoles;
 
                 }, function (data) {
@@ -118,7 +115,6 @@ angular.module('gestionUsersApp')
         function (data) {
           $scope.error = data;// a refaire
         });
-
     }
   }])
 

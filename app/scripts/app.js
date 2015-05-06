@@ -40,10 +40,6 @@ angular
         templateUrl:'../views/projets/addProj.html',
         controller: 'AddProjCtrl'
       })
-      .when('/:userId/deleteUtil',{
-        templateUrl:'views/delete.html',
-        controller:'DeleteUtilCtrl'
-      })
       .when('/:userId/detailsUtil',{
         templateUrl:'../views/utilisateurs/detailsUtil.html',
         controller:'DetailUtilCtrl'
