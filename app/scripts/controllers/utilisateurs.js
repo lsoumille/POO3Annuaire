@@ -65,7 +65,6 @@ angular.module('gestionUsersApp')
               Users.getRoles($routeParams.userId,
                 function(data){
                   donneesRoles = data;
-                  console.log(donneesProj[0]);
                   for(var i = 0 ; i < donneesRoles.length ; ++i){
                     for(var j = 0 ; j < donneesProj.length ; ++j) {
                       if(donneesRoles[i].ProjectId === donneesProj[j].id){

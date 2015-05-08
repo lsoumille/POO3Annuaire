@@ -52,9 +52,17 @@ angular
         templateUrl:'../views/projets/addProj.html',
         controller:'EditProjCtrl'
       })
-      .when('/:projId/detailsProj',{
+      .when('/:projId/detailsProj', {
         templateUrl:'../views/projets/detailsProj.html',
         controller: 'DetailProjCtrl'
+      })
+      .when('/addRole', {
+        templateUrl:'../views/roles/addRole.html',
+        controller: 'AddRoleCtrl'
+      })
+      .when('/:roleId/editerRole', {
+        templateUrl:'../views/roles/addRole.html',
+        controller: 'EditRoleCtrl'
       })
       .otherwise({
         redirectTo: '/'
