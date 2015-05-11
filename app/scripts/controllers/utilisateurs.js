@@ -8,7 +8,7 @@
  * Controller of the gestionUsersApp
  */
 angular.module('gestionUsersApp')
-  .controller('UtilCtrl',  ['$scope', '$http', '$routeParams', 'Users', function ($scope, $http, $routeParams, Users) {
+  .controller('UtilCtrl',  ['$scope', '$http', '$routeParams', '$location', 'Users', function ($scope, $http, $routeParams, $location, Users) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
@@ -21,9 +21,9 @@ angular.module('gestionUsersApp')
       //erreur dans le chargement
     });
 
-    $scope.deleteElt = function (projId) {
+    $scope.deleteElt = function (userId) {
       Users.delete(userId, function(data){
-        $location.url('/utilisateurs');// ne marche pas
+        $location.path('/utilisateurs');
       }, function (data){
         //erreur dans le delete
       });

@@ -45,7 +45,7 @@ angular.module('gestionUsersApp')
       'AngularJS',
       'Karma'
     ];
-    console.log("salut");
+
     Projects.getAll($routeParams.projId, function (data) {
       $scope.projects = data;
     }, function (data) {
