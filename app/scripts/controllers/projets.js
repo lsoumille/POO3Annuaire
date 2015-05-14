@@ -15,22 +15,30 @@ angular.module('gestionUsersApp')
       'Karma'
      ];
 
-    Projects.getAll($routeParams.projId, function (data) {
-      $scope.projects = data;
-    }, function (data) {
-      //erreur dans le chargement
-    });
+    $scope.getAll = function() {
+      Projects.getAll(function(data) {
+          $scope.projects = data;
+        },
+        function(data) {
+          alert("Projets indisponibles");
+        }
+      );
+    }
 
-    $scope.deleteElt = function (projId) {
-      Projects.delete(projId, function(data){
-        $location.url('/projets');// ne marche pas
+    $scope.deleteElt = function (proj) {
+      Projects.delete(proj.id, function(data){
+        alert(proj.title + " supprimé");
+        $scope.getAll();
       }, function (data){
-        //erreur dans le delete
+        alert("Suppression impossible");
       });
     }
 
+
+    //chargement
+    $scope.getAll();
   }])
-  .controller('AddProjCtrl',  ['$scope', '$http', '$routeParams', 'Projects', function ($scope, $http, $routeParams, Projects) {
+  .controller('AddProjCtrl',  ['$scope', '$http', 'Projects', '$location', function ($scope, $http, Projects, $location) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
@@ -38,11 +46,12 @@ angular.module('gestionUsersApp')
     ];
 
     $scope.saveData = function () {
-      Projects.add($scope.project, function (data){
-        //afficher l'élément ajouté
-      }, function (data){
-        //erreur dans l'ajout
-      });
+      Projects.add($scope.project,
+        function (data) {
+          $location.path('/' + data.id + '/detailsProj');
+        }, function (data) {
+          $scope.error("Ajout de projet indisponible");
+        });
     }
   }])
 
@@ -65,9 +74,9 @@ angular.module('gestionUsersApp')
 
     $scope.saveData = function () {
       Projects.edit($scope.project, function (data){
-        $location.path('/' + data.id + '/detailsProj');//a test
+        $location.path('/' + data.id + '/detailsProj');
       }, function (data){
-        //erreur dans l'ajout
+        alert("Modification indisponible")
       });
     }
   }])
@@ -104,16 +113,15 @@ angular.module('gestionUsersApp')
                   $scope.users = donneesRoles;
 
                 }, function (data) {
-                  //a faire
+                  alert('Impossible de charger les rôles');
                 });
             },
             function (data) {
-              //a faire
+              alert('Impossible de charger les utilisateurs')
             });
-
         },
         function (data) {
-          $scope.error = data;// a refaire
+          ("Détails du projet indisponible")
         });
     }
   }])

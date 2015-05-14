@@ -15,22 +15,28 @@ angular.module('gestionUsersApp')
       'Karma'
     ];
 
-    Users.getAll($routeParams.userId, function (data) {
-      $scope.users = data;
-    }, function (data) {
-      //erreur dans le chargement
-    });
+    $scope.getAll = function () {
+      Users.getAll(function (data) {
+        $scope.users = data;
+      }, function (data) {
+        alert("Chargement des utilisateurs impossible");
+      });
 
-    $scope.deleteElt = function (userId) {
-      Users.delete(userId, function(data){
-        $location.path('/utilisateurs');
+    }
+
+    $scope.deleteElt = function (user) {
+      Users.delete(user.id, function(data){
+        alert(user.surname + ' ' + user.name + " supprimé");
+        $scope.getAll();
       }, function (data){
-        //erreur dans le delete
+        alert("Suppression impossible")
       });
     }
+
+    $scope.getAll();
   }])
 
-  .controller('AddUtilCtrl',['$scope', '$http', '$routeParams', 'Users', function ($scope, $http, $routeParams, Users){
+  .controller('AddUtilCtrl',['$scope', '$http', '$routeParams', 'Users', '$location', function ($scope, $http, $routeParams, Users, $location){
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
@@ -39,12 +45,11 @@ angular.module('gestionUsersApp')
 
     $scope.saveData = function () {
       Users.add($scope.user, function (data){
-        //afficher l'élément ajouté
+        $location.path('/' + data.id + '/detailsUtil');
       }, function (data){
-        //erreur dans l'ajout
+        alert('Ajout impossible');
       });
     }
-
   }])
 
   .controller('DetailUtilCtrl',['$scope', '$http', '$routeParams', 'Users', 'Roles', 'Projects', function ($scope, $http, $routeParams, Users, Roles, Projects) {
@@ -76,14 +81,14 @@ angular.module('gestionUsersApp')
                   }
                   $scope.projects = donneesRoles;
                 }, function (data) {
-                  //a faire
+                  alert('Roles indisponibles')
                 })
             }, function (data){
-              // a faire
+              alert('Projets indisponibles')
             })
         },
         function (data) {
-          $scope.error = data;
+          alert("Chargement de l'utilisateur impossible");
         });
     }
   }])
@@ -101,7 +106,7 @@ angular.module('gestionUsersApp')
           $scope.user = data;
         },
         function(data) {
-          $scope.error = data;
+          alert("Chargement des informations impossible");
         });
     }
 
@@ -111,7 +116,7 @@ angular.module('gestionUsersApp')
           $location.path('/'+ data.id +'/detailsUtil');
         },
         function(data) {
-          $scope.error = data;
+          alert("Modification de l'utilisateur impossible");
         });
     };
   }])

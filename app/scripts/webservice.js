@@ -10,7 +10,7 @@
 angular.module('gestionUsersApp')
   .service('Users', ['$http', function Users($http) {
     //select all users
-    this.getAll = function (userId, successCB, errorCB) {
+    this.getAll = function (successCB, errorCB) {
       $http.get('http://poo-ihm-2015-rest.herokuapp.com/api/Users/')
         .success(function (data) {
           if (data.status === 'success') {
@@ -205,7 +205,7 @@ angular.module('gestionUsersApp')
     }
 
     //select all projects
-    this.getAll = function (projectId, successCB, errorCB) {
+    this.getAll = function (successCB, errorCB) {
       $http.get('http://poo-ihm-2015-rest.herokuapp.com/api/Projects/')
         .success(function (data) {
           if (data.status === 'success') {

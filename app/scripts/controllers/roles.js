@@ -46,14 +46,48 @@ angular.module('gestionUsersApp')
       'Karma'
     ];
 
-    Projects.getAll($routeParams.projId, function (data) {
+    Projects.getAll(function (data) {
       $scope.projects = data;
     }, function (data) {
       //erreur dans le chargement
     });
 
-    Users.getAll($routeParams.userId, function (data) {
+    Users.getAll(function (data) {
       $scope.utils = data;
+    }, function (data) {
+
+    });
+
+    $scope.saveData = function(){
+      $scope.role.UserId = $scope.utilSelected.id;
+      $scope.role.ProjectId = $scope.projSelected.id;
+      Roles.add($scope.role, function(data){
+        //
+      }, function (data) {
+        //
+      });
+    }
+  }])
+
+  .controller('AddUtilRoleCtrl',  ['$scope', '$http', '$routeParams', '$location', 'Roles', 'Projects', 'Users', function ($scope, $http, $routeParams, $location, Roles, Projects, Users) {
+    $scope.awesomeThings = [
+      'HTML5 Boilerplate',
+      'AngularJS',
+      'Karma'
+    ];
+
+    Projects.getAll(function (data) {
+      $scope.projects = data;
+    }, function (data) {
+      //erreur dans le chargement
+    });
+
+    Users.get($routeParams.userId, function (data) {
+      var tab = new Array();
+      tab[0] = data;
+      $scope.utils = tab;
+      $scope
+        .utilSelected = tab[0];
     }, function (data) {
 
     });
