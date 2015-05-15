@@ -44,11 +44,13 @@ angular.module('gestionUsersApp')
     ];
 
     $scope.saveData = function () {
-      Users.add($scope.user, function (data){
-        $location.path('/' + data.id + '/detailsUtil');
-      }, function (data){
-        alert('Ajout impossible');
-      });
+      if($scope.user){
+        Users.add($scope.user, function (data){
+          $location.path('/' + data.id + '/detailsUtil');
+        }, function (data){
+          alert('Ajout impossible');
+        });
+      }
     }
   }])
 
@@ -58,42 +60,56 @@ angular.module('gestionUsersApp')
       'AngularJS',
       'Karma'
     ];
-    if ($routeParams.userId) {
-      Users.get($routeParams.userId,
-        function (data) {
-          $scope.user = data;
-          var donneesProj = new Array();
-          Users.getProj($routeParams.userId,
-            function (data) {
-              donneesProj = data;
-              var donneesRoles = new Array();
-              Users.getRoles($routeParams.userId,
-                function(data){
-                  donneesRoles = data;
-                  for(var i = 0 ; i < donneesRoles.length ; ++i){
-                    for(var j = 0 ; j < donneesProj.length ; ++j) {
-                      if(donneesRoles[i].ProjectId === donneesProj[j].id){
-                        donneesRoles[i].title = donneesProj[j].title;
-                        donneesRoles[i].description = donneesProj[j].description;
-                        break;
+
+    $scope.loadInfo = function () {
+      if ($routeParams.userId) {
+        Users.get($routeParams.userId,
+          function (data) {
+            $scope.user = data;
+            var donneesProj = new Array();
+            Users.getProj($routeParams.userId,
+              function (data) {
+                donneesProj = data;
+                var donneesRoles = new Array();
+                Users.getRoles($routeParams.userId,
+                  function(data){
+                    donneesRoles = data;
+                    for(var i = 0 ; i < donneesRoles.length ; ++i){
+                      for(var j = 0 ; j < donneesProj.length ; ++j) {
+                        if(donneesRoles[i].ProjectId === donneesProj[j].id){
+                          donneesRoles[i].title = donneesProj[j].title;
+                          donneesRoles[i].description = donneesProj[j].description;
+                          break;
+                        }
                       }
                     }
-                  }
-                  $scope.projects = donneesRoles;
-                }, function (data) {
-                  alert('Roles indisponibles')
-                })
-            }, function (data){
-              alert('Projets indisponibles')
-            })
-        },
-        function (data) {
-          alert("Chargement de l'utilisateur impossible");
-        });
+                    $scope.projects = donneesRoles;
+                  }, function (data) {
+                    alert('Roles indisponibles')
+                  })
+              }, function (data){
+                alert('Projets indisponibles')
+              })
+          },
+          function (data) {
+            alert("Chargement de l'utilisateur impossible");
+          });
+      }
     }
+
+    $scope.deleteElt = function(proj){
+      Roles.delete(proj.id, function (data) {
+        alert("Role supprimé pour le projet " + proj.title);
+        $scope.loadInfo();
+      }, function(){
+        alert("impossible de supprimé le role");
+      })
+    }
+
+    $scope.loadInfo();
   }])
 
-  .controller('EditUtilCtrl', ['$scope', '$http', '$routeParams', '$location', 'Users', function ($scope, $http, $routeParams, $location, Users) {
+  .controller('EditUtilCtrl', ['$scope', '$http', '$routeParams', '$location', 'Users', 'Roles', function ($scope, $http, $routeParams, $location, Users, Roles) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',

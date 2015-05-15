@@ -165,6 +165,17 @@ angular.module('gestionUsersApp')
           }
         });
     }
+
+    this.delete = function(roleId, successCB, errorCB) {
+      $http.delete('http://poo-ihm-2015-rest.herokuapp.com/api/Roles/' + roleId)
+        .success(function (data) {
+          if (data.status === 'success') {
+            successCB(data.data);
+          } else {
+            errorCB(data.data);
+          }
+        });
+    }
   }])
 
   .service('Projects',  ['$http', function Projects($http) {

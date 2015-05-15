@@ -60,9 +60,13 @@ angular
         templateUrl:'../views/roles/addRole.html',
         controller: 'AddRoleCtrl'
       })
-      .when('/:userId/addRole', {
+      .when('/util/:userId/addRole', {
         templateUrl:'../views/roles/addRole.html',
         controller: 'AddUtilRoleCtrl'
+      })
+      .when('/proj/:projId/addRole', {
+        templateUrl:'../views/roles/addRole.html',
+        controller: 'AddProjRoleCtrl'
       })
       .when('/:roleId/editerRole', {
         templateUrl:'../views/roles/addRole.html',

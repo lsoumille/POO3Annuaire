@@ -45,13 +45,16 @@ angular.module('gestionUsersApp')
       'Karma'
     ];
 
-    $scope.saveData = function () {
-      Projects.add($scope.project,
-        function (data) {
-          $location.path('/' + data.id + '/detailsProj');
-        }, function (data) {
-          $scope.error("Ajout de projet indisponible");
-        });
+
+      $scope.saveData = function () {
+        if($scope.project){
+          Projects.add($scope.project,
+          function (data) {
+            $location.path('/' + data.id + '/detailsProj');
+          }, function (data) {
+            $scope.error("Ajout de projet indisponible");
+          });
+      }
     }
   }])
 
@@ -68,7 +71,7 @@ angular.module('gestionUsersApp')
           $scope.project = data;
         },
         function(data) {
-          $scope.error = data;
+          alert("Chargement des informations impossibles");
         });
     }
 
@@ -87,42 +90,54 @@ angular.module('gestionUsersApp')
       'AngularJS',
       'Karma'
     ];
-
-    if ($routeParams.projId) {
-      $scope.users = new Array();
-      Projects.get($routeParams.projId,
-        function (data) {
-          $scope.proj = data;
-          var donneesUtil = new Array();
-          Projects.getUtil($routeParams.projId,
-            function (data) {
-              donneesUtil = data;
-              var donneesRoles = new Array();
-              Projects.getRoles($routeParams.projId,
-                function (data) {
-                  donneesRoles = data;
-                  for(var i = 0 ; i < donneesRoles.length ; ++i){
-                    for(var j = 0 ; j < donneesUtil.length ; ++j){
-                      if(donneesRoles[i].UserId === donneesUtil[j].id){
-                        donneesRoles[i].surname = donneesUtil[j].surname;
-                        donneesRoles[i].prenom = donneesUtil[j].name;
-                        break;
+    $scope.loadInfo = function(){
+      if ($routeParams.projId) {
+        $scope.users = new Array();
+        Projects.get($routeParams.projId,
+          function (data) {
+            $scope.proj = data;
+            var donneesUtil = new Array();
+            Projects.getUtil($routeParams.projId,
+              function (data) {
+                donneesUtil = data;
+                var donneesRoles = new Array();
+                Projects.getRoles($routeParams.projId,
+                  function (data) {
+                    donneesRoles = data;
+                    for(var i = 0 ; i < donneesRoles.length ; ++i){
+                      for(var j = 0 ; j < donneesUtil.length ; ++j){
+                        if(donneesRoles[i].UserId === donneesUtil[j].id){
+                          donneesRoles[i].surname = donneesUtil[j].surname;
+                          donneesRoles[i].prenom = donneesUtil[j].name;
+                          break;
+                        }
                       }
                     }
-                  }
-                  $scope.users = donneesRoles;
+                    $scope.users = donneesRoles;
 
-                }, function (data) {
-                  alert('Impossible de charger les rôles');
-                });
-            },
-            function (data) {
-              alert('Impossible de charger les utilisateurs')
-            });
-        },
-        function (data) {
-          ("Détails du projet indisponible")
-        });
+                  }, function (data) {
+                    alert('Impossible de charger les rôles');
+                  });
+              },
+              function (data) {
+                alert('Impossible de charger les utilisateurs')
+              });
+          },
+          function (data) {
+            ("Détails du projet indisponible")
+          });
+      }
     }
+
+    $scope.deleteElt = function(user){
+      Roles.delete(user.id, function (data) {
+        alert("Role supprimé pour l'utilisateur " + user.surname);
+        $scope.loadInfo();
+      }, function(){
+        alert("impossible de supprimé le role");
+      })
+    }
+
+    $scope.loadInfo();
   }])
 

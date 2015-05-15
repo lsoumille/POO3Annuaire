@@ -4,12 +4,13 @@
   <p>Description : {{proj.description}}</p>
 </div>
 <div class="col-lg-12">
-  <h3 class="center bluePoly">Utilisateurs</h3>
+  <h3 class="center bluePoly">Utilisateurs <a href="#/proj/{{proj.id}}/addRole"><button class="btn btn-primary droite">Ajouter Role</button></a></h3>
   <table class="table table-striped table-bordered table-hover">
     <tr ng-repeat="user in users">
       <td>{{user.surname}}</td>
       <td>{{user.prenom}}</td>
       <td>{{user.name}}</td>
+      <td><a ng-click="deleteElt(user)"><i class="fa fa-times fa-2x"></i></a></td>
     </tr>
   </table>
 </div>
